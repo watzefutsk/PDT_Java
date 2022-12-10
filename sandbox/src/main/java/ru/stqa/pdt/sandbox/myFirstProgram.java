@@ -2,19 +2,21 @@ package ru.stqa.pdt.sandbox;
 
 public class myFirstProgram {
 	public static void main(String[] args) {
-		hello("Dima");
 
-		Square s = new Square(5);
+		Point p1 = new Point();
+		p1.p1 = 2;
+		p1.p2 = 4;
 
-		System.out.println("Площадь квадрата со стороной " + s.l + " равна " + s.area());
+		Point p2 = new Point();
+		p2.p1 = 4;
+		p2.p2 = 6;
 
-		Rectangle r = new Rectangle(7,8);
+		System.out.println("Расстояние между точками: " + distance(p1, p2));
 
-		System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " равна " + r.area());
 	}
 
-	public static void hello(String somestr) {
-		System.out.println("Hello, " + somestr + "!");
+	public static double distance(Point p1, Point p2) {
+		return Math.sqrt((p1.p2 - p1.p1) * (p1.p2 - p1.p1) + (p2.p2 - p2.p1) * (p2.p2 - p2.p1));
 	}
 
 }
