@@ -1,17 +1,17 @@
 package ru.stqa.pdt.sandbox;
 
 public class Point {
-    public double p1;
-    public double p2;
+    public double x;
+    public double y;
 
-    public Point (double p1, double p2) {
-        this.p1 = p1;
-        this.p2 = p2;
+    public Point (double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
-
-    public double distance(Point p) {
-        return Math.sqrt(Math.pow((this.p2 - this.p1), 2) + Math.pow((p.p2 - p.p1), 2));
+    public double distance(Point p2) {
+        double result = Math.sqrt(Math.pow((p2.x - this.x), 2) + Math.pow((p2.y - this.y), 2));
+        return result;
     }
 
 }
