@@ -12,7 +12,7 @@ public class GroupCreationTest {
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
-    System.setProperty("webdriver.msedge.driver", "");
+    //System.setProperty("webdriver.msedge.driver", "");
     wd = new EdgeDriver();
     wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     wd.get("http://localhost/addressbook/");
