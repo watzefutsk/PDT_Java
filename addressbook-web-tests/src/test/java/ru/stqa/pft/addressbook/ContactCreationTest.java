@@ -10,7 +10,7 @@ import org.openqa.selenium.*;
 public class ContactCreationTest {
   private WebDriver wd;
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     System.setProperty("webdriver.msedge.driver", "");
     wd = new EdgeDriver();
@@ -45,25 +45,12 @@ public class ContactCreationTest {
   }
 
   private void fillContactCreationPage(ContactData contactData) {
-    wd.findElement(By.name("firstname")).click();
-    wd.findElement(By.name("firstname")).clear();
     wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
-    wd.findElement(By.name("lastname")).clear();
     wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
-    wd.findElement(By.name("address")).click();
-    wd.findElement(By.name("address")).clear();
     wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
-    wd.findElement(By.name("home")).click();
-    wd.findElement(By.name("home")).clear();
     wd.findElement(By.name("home")).sendKeys(contactData.getHomenumber());
-    wd.findElement(By.name("mobile")).click();
-    wd.findElement(By.name("mobile")).clear();
     wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilenumber());
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).clear();
     wd.findElement(By.name("email")).sendKeys(contactData.getFirstemail());
-    wd.findElement(By.name("email2")).click();
-    wd.findElement(By.name("email2")).clear();
     wd.findElement(By.name("email2")).sendKeys(contactData.getSecondemail());
   }
 
@@ -71,7 +58,7 @@ public class ContactCreationTest {
     wd.findElement(By.linkText("add new")).click();
   }
 
-  @AfterClass(alwaysRun = true)
+  @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
     logout();
     wd.quit();
