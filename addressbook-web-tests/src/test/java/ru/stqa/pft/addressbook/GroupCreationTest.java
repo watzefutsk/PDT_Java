@@ -35,7 +35,6 @@ public class GroupCreationTest {
     fillGroupForm(new GroupData("test1", "test2", "test3"));
     submitGroupCreation();
     returnToGroupPage();
-
   }
 
   private void logout() {

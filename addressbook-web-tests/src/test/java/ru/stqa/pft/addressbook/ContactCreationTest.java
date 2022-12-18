@@ -15,18 +15,36 @@ public class ContactCreationTest {
     System.setProperty("webdriver.msedge.driver", "");
     wd = new EdgeDriver();
     wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+    wd.get("http://localhost/addressbook/");
+    login();
   }
 
-  @Test
-  public void testContactCreation() throws Exception {
-    wd.get("http://localhost/addressbook/");
+  private void login() {
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).clear();
     wd.findElement(By.name("user")).sendKeys("admin");
     wd.findElement(By.name("pass")).clear();
     wd.findElement(By.name("pass")).sendKeys("secret");
     wd.findElement(By.xpath("//input[@value='Login']")).click();
-    wd.findElement(By.linkText("add new")).click();
+  }
+
+  @Test
+  public void testContactCreation() throws Exception {
+    goToContactCreationPage();
+    fillContactCreationPage();
+    submitContactCreation();
+    returnToHomePage();
+  }
+
+  private void returnToHomePage() {
+    wd.findElement(By.linkText("home page")).click();
+  }
+
+  private void submitContactCreation() {
+    wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+  }
+
+  private void fillContactCreationPage() {
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).clear();
     wd.findElement(By.name("firstname")).sendKeys("Andy");
@@ -47,18 +65,20 @@ public class ContactCreationTest {
     wd.findElement(By.name("email2")).click();
     wd.findElement(By.name("email2")).clear();
     wd.findElement(By.name("email2")).sendKeys("test1@gmail.com");
-    wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-    wd.findElement(By.linkText("home page")).click();
-    wd.findElement(By.linkText("Logout")).click();
-    wd.findElement(By.name("user")).clear();
-    wd.findElement(By.name("user")).sendKeys("admin");
-    wd.findElement(By.name("pass")).clear();
-    wd.findElement(By.name("pass")).sendKeys("secret");
+  }
+
+  private void goToContactCreationPage() {
+    wd.findElement(By.linkText("add new")).click();
   }
 
   @AfterClass(alwaysRun = true)
   public void tearDown() throws Exception {
+    logout();
     wd.quit();
+  }
+
+  private void logout() {
+    wd.findElement(By.linkText("Logout")).click();
   }
 
   private boolean isElementPresent(By by) {
