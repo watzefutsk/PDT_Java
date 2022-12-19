@@ -12,7 +12,6 @@ public class ContactCreationTest {
 
   @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
-    System.setProperty("webdriver.msedge.driver", "");
     wd = new EdgeDriver();
     wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     wd.get("http://localhost/addressbook/");
@@ -31,7 +30,13 @@ public class ContactCreationTest {
   @Test
   public void testContactCreation() throws Exception {
     goToContactCreationPage();
-    fillContactCreationPage(new ContactData("Andy", "Smith", "Saint-Petersburg", "83522476125", "89536547898", "test@yandex.ru", "test1@gmail.com"));
+    fillContactCreationPage(new ContactData("Andy",
+                                            "Smith",
+                                            "Saint-Petersburg",
+                                            "83522476125",
+                                            "89536547898",
+                                            "test@yandex.ru",
+                                            "test1@gmail.com"));
     submitContactCreation();
     returnToHomePage();
   }
