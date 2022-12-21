@@ -1,8 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
@@ -10,7 +8,8 @@ import java.time.Duration;
 
 public class ApplicationManager {
 
-    WebDriver wd;
+    EdgeDriver wd;
+    private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
     private NavigatioHelper navigatioHelper;
     private GroupHelper groupHelper;
@@ -23,11 +22,12 @@ public class ApplicationManager {
         navigatioHelper = new NavigatioHelper(wd);
         sessionHelper = new SessionHelper(wd);
         sessionHelper.login("admin", "secret");
+        contactHelper = new ContactHelper(wd);
     }
 
 
 
-    private void logout() {
+    public void logout() {
       wd.findElement(By.linkText("Logout")).click();
     }
 
@@ -42,5 +42,13 @@ public class ApplicationManager {
 
     public NavigatioHelper getNavigatioHelper() {
         return navigatioHelper;
+    }
+
+    public void goToContactCreationPage() {
+      wd.findElement(By.linkText("add new")).click();
+    }
+
+    public ContactHelper getContactHelper() {
+        return contactHelper;
     }
 }
