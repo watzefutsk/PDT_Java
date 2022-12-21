@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
 import java.time.Duration;
@@ -26,13 +25,8 @@ public class ApplicationManager {
     }
 
 
-
-    public void logout() {
-      wd.findElement(By.linkText("Logout")).click();
-    }
-
     public void stop() {
-        logout();
+        sessionHelper.logout();
         wd.quit();
     }
 
@@ -40,15 +34,12 @@ public class ApplicationManager {
         return groupHelper;
     }
 
-    public NavigatioHelper getNavigatioHelper() {
-        return navigatioHelper;
-    }
-
-    public void goToContactCreationPage() {
-      wd.findElement(By.linkText("add new")).click();
-    }
 
     public ContactHelper getContactHelper() {
         return contactHelper;
+    }
+
+    public NavigatioHelper getNavigatioHelper() {
+        return navigatioHelper;
     }
 }
