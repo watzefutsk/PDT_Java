@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.edge.EdgeDriver;
 
 import java.time.Duration;
@@ -24,7 +23,6 @@ public class ApplicationManager {
         contactHelper = new ContactHelper(wd);
     }
 
-
     public void stop() {
         sessionHelper.logout();
         wd.quit();
@@ -33,7 +31,6 @@ public class ApplicationManager {
     public GroupHelper getGroupHelper() {
         return groupHelper;
     }
-
 
     public ContactHelper getContactHelper() {
         return contactHelper;
