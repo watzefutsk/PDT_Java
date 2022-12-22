@@ -1,30 +1,29 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-public class ContactHelper {
+public class ContactHelper extends HelperBase {
     EdgeDriver wd;
     public ContactHelper(EdgeDriver wd) {
-        this.wd = wd;
+        super(wd);
     }
     public void returnToHomePage() {
-      wd.findElement(By.linkText("home page")).click();
+      click(By.linkText("home page"));
     }
 
     public void submitContactCreation() {
-      wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+      click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
     public void fillContactCreationPage(ContactData contactData) {
-      wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstname());
-      wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
-      wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
-      wd.findElement(By.name("home")).sendKeys(contactData.getHomenumber());
-      wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilenumber());
-      wd.findElement(By.name("email")).sendKeys(contactData.getFirstemail());
-      wd.findElement(By.name("email2")).sendKeys(contactData.getSecondemail());
+      type(By.name("firstname"), contactData.getFirstname());
+      type(By.name("lastname"), contactData.getLastname());
+      type(By.name("address"), contactData.getAddress());
+      type(By.name("home"), contactData.getHomenumber());
+      type(By.name("mobile"), contactData.getMobilenumber());
+      type(By.name("email"), contactData.getFirstemail());
+      type(By.name("email2"), contactData.getSecondemail());
     }
 }
