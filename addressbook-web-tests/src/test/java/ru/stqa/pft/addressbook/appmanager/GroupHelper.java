@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
@@ -45,12 +44,4 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    public boolean isAlertPresent() {
-        try {
-            wd.switchTo().alert().accept();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
 }

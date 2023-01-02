@@ -22,8 +22,8 @@ public class ApplicationManager {
     }
 
     public void init() {
-        System.setProperty("webdriver.edge.driver","D:/Git/cmd/msedgedriver.exe");
-        System.setProperty("webdriver.chrome.driver", "D:/Git/cmd/chromedriver.exe");
+        //System.setProperty("webdriver.edge.driver","D:/Git/cmd/msedgedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "D:/Git/cmd/chromedriver.exe");
         if (browser.equals(BrowserType.EDGE)) {
             wd = new EdgeDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
