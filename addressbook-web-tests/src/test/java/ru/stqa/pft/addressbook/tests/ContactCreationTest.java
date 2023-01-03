@@ -15,7 +15,8 @@ public class ContactCreationTest extends TestBase {
                                             "83522476125",
                                             "89536547898",
                                             "test@yandex.ru",
-                                            "test1@gmail.com"));
+                                            "test1@gmail.com",
+                                            "test1"), true);
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().returnToHomePage();
   }
