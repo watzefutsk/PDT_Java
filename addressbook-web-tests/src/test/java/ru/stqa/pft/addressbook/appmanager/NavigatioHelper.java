@@ -22,4 +22,11 @@ public class NavigatioHelper extends HelperBase {
         }
       wd.findElement(By.linkText("add new")).click();
     }
+
+    public void goToHomePage() {
+        if (isElementPresent(By.id("maintable"))) {
+            return;
+        }
+        click(By.linkText("home"));
+    }
 }
