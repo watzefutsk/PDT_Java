@@ -19,7 +19,7 @@ public class ContactModificationTest extends TestBase{
                     "83522476125",
                     "89536547898",
                     "test@yandex.ru",
-                    "test1@gmail.com", "test1"));
+                    "test1@gmail.com", null));
         }
         app.getContactHelper().initContactModification();
         app.getContactHelper().fillContactCreationPage(new ContactData(

@@ -21,6 +21,6 @@ public class ContactCreationTest extends TestBase {
                                             "89536547898",
                                             "test@yandex.ru",
                                             "test1@gmail.com",
-                                            "test1"));
+                                            null));
   }
 }
