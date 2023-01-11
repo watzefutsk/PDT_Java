@@ -1,12 +1,13 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase {
-    EdgeDriver wd;
-    public ContactHelper(EdgeDriver wd) {
+    public ContactHelper(WebDriver wd) {
         super(wd);
     }
     public void returnToHomePage() {
@@ -17,7 +18,7 @@ public class ContactHelper extends HelperBase {
       click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactCreationPage(ContactData contactData) {
+    public void fillContactCreationPage(ContactData contactData, boolean creation) {
       type(By.name("firstname"), contactData.getFirstname());
       type(By.name("lastname"), contactData.getLastname());
       type(By.name("address"), contactData.getAddress());
@@ -25,6 +26,13 @@ public class ContactHelper extends HelperBase {
       type(By.name("mobile"), contactData.getMobilenumber());
       type(By.name("email"), contactData.getFirstemail());
       type(By.name("email2"), contactData.getSecondemail());
+      
+      if (creation) {
+          //new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+          new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
+      } else {
+          Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
     }
 
     public void initContactModification() {
@@ -41,5 +49,20 @@ public class ContactHelper extends HelperBase {
 
     public void deleteSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void createContact(ContactData contact) {
+        goToContactCreationPage();
+        fillContactCreationPage(contact, true);
+        submitContactCreation();
+        returnToHomePage();
+    }
+
+    public void goToContactCreationPage() {
+        wd.findElement(By.linkText("add new")).click();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
