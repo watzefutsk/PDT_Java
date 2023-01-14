@@ -2,9 +2,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
     public ContactHelper(WebDriver wd) {
@@ -22,10 +26,10 @@ public class ContactHelper extends HelperBase {
       type(By.name("firstname"), contactData.getFirstname());
       type(By.name("lastname"), contactData.getLastname());
       type(By.name("address"), contactData.getAddress());
-      type(By.name("home"), contactData.getHomenumber());
-      type(By.name("mobile"), contactData.getMobilenumber());
-      type(By.name("email"), contactData.getFirstemail());
-      type(By.name("email2"), contactData.getSecondemail());
+      type(By.name("home"), contactData.getHomeNumber());
+      type(By.name("mobile"), contactData.getMobileNumber());
+      type(By.name("email"), contactData.getFirstEmail());
+      type(By.name("email2"), contactData.getSecondEmail());
       
       if (creation) {
           //new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -35,16 +39,17 @@ public class ContactHelper extends HelperBase {
       }
     }
 
-    public void initContactModification() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initContactModification(int index) {
+        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+        //click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void submitContactModification() {
         click(By.xpath("//input[22]"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContact() {
@@ -64,5 +69,19 @@ public class ContactHelper extends HelperBase {
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
+        for (WebElement element: elements
+             ) {
+            String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
