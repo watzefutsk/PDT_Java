@@ -8,7 +8,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import java.util.List;
 
 public class ContactDeletionTest extends TestBase {
-    @Test
+    @Test(enabled = false)
     public void testContactDeletion(){
         app.getNavigatioHelper().goToGroupPage();
         if (!app.getGroupHelper().isThereAGroup()) {

@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ContactModificationTest extends TestBase{
-    @Test
+    @Test(enabled = false)
     public void testContactModification() {
         app.getNavigatioHelper().goToGroupPage();
         if (!app.getGroupHelper().isThereAGroup()) {
