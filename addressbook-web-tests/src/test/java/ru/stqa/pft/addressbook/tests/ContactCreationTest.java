@@ -6,7 +6,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -14,11 +13,11 @@ public class ContactCreationTest extends TestBase {
 
   @Test (enabled = false)
   public void testContactCreation() throws Exception {
-    app.getNavigatioHelper().goToGroupPage();
-    if (!app.getGroupHelper().isThereAGroup()) {
-      app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+    app.goTo().groupPage();
+    if (!app.group().isThereAGroup()) {
+      app.group().create(new GroupData("test1", null, null));
     }
-    app.getNavigatioHelper().goToHomePage();
+    app.goTo().goToHomePage();
     List<ContactData> before = app.getContactHelper().getContactList();
     ContactData contact = new ContactData(
             "Dima",

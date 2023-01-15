@@ -10,11 +10,11 @@ import java.util.List;
 public class ContactDeletionTest extends TestBase {
     @Test(enabled = false)
     public void testContactDeletion(){
-        app.getNavigatioHelper().goToGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        app.goTo().groupPage();
+        if (!app.group().isThereAGroup()) {
+            app.group().create(new GroupData("test1", null, null));
         }
-        app.getNavigatioHelper().goToHomePage();
+        app.goTo().goToHomePage();
         if (!app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactData("Andy",
                     "Smith",
@@ -27,8 +27,8 @@ public class ContactDeletionTest extends TestBase {
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContact(before.size() - 1);
         app.getContactHelper().deleteSelectedContact();
-        app.getGroupHelper().isAlertPresent();
-        app.getNavigatioHelper().goToHomePage();
+        app.group().isAlertPresent();
+        app.goTo().goToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
