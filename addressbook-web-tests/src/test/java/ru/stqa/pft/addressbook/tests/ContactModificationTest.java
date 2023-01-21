@@ -17,9 +17,9 @@ public class ContactModificationTest extends TestBase {
         if (app.group().all().size() == 0) {
             app.group().create(new GroupData().withName("test1"));
         }
-        app.goTo().goToHomePage();
-        if (!app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(new ContactData("Andy",
+        app.goTo().homePage();
+        if (app.contact().all().size() == 0) {
+            app.contact().create(new ContactData("Andy",
                     "Smith",
                     "Saint-Petersburg",
                     "83522476125",
@@ -31,7 +31,7 @@ public class ContactModificationTest extends TestBase {
 
     @Test (enabled = true)
     public void testContactModification() {
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().all();
         int index = before.size() - 1;
         ContactData contact = new ContactData(before.get(index).getId(), "Maria",
                 "Ivanova",
@@ -41,8 +41,8 @@ public class ContactModificationTest extends TestBase {
                 "test123@yandex.ru",
                 "test123@gmail.com",
                 null);
-        app.getContactHelper().modifyContact(index, contact);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().modify(index, contact);
+        List<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size());
 
         before.remove(index);

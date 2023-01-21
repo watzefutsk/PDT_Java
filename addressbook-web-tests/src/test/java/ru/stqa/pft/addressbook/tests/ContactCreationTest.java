@@ -15,15 +15,15 @@ public class ContactCreationTest extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().groupPage();
-    if (!app.group().isThereAGroup()) {
+    if (app.group().all().size() == 0) {
       app.group().create(new GroupData().withName("test1"));
     }
-    app.goTo().goToHomePage();
+    app.goTo().homePage();
   }
   @Test (enabled = true)
   public void testContactCreation() throws Exception {
 
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().all();
     ContactData contact = new ContactData(
             "Dima",
             "Smith",
@@ -33,8 +33,8 @@ public class ContactCreationTest extends TestBase {
             "test@yandex.ru",
             "test1@gmail.com",
             null);
-    app.getContactHelper().createContact(contact);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().create(contact);
+    List<ContactData> after = app.contact().all();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     before.add(contact);

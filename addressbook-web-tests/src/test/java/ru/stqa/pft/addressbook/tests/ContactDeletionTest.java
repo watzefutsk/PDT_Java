@@ -16,9 +16,9 @@ public class ContactDeletionTest extends TestBase {
         if (app.group().all().size() == 0) {
             app.group().create(new GroupData().withName("test1"));
         }
-        app.goTo().goToHomePage();
-        if (!app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(new ContactData("Andy",
+        app.goTo().homePage();
+        if (app.contact().all().size() == 0) {
+            app.contact().create(new ContactData("Andy",
                     "Smith",
                     "Saint-Petersburg",
                     "83522476125",
@@ -30,10 +30,10 @@ public class ContactDeletionTest extends TestBase {
     @Test (enabled = true)
     public void testContactDeletion() {
 
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().all();
         int index = before.size() - 1;
-        app.getContactHelper().deleteContact(index);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().delete(index);
+        List<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(index);
