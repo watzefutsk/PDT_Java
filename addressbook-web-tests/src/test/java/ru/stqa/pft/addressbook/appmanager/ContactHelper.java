@@ -6,17 +6,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
     public void returnToHomePage() {
-        //временное решение, пока не пойму как обращаться к NavigationHelper
+        //временное решение, пока не пойму как обращаться к методу homePage класса NavigationHelper
       //click(By.linkText("home page"));
       click(By.linkText("home"));
     }
@@ -77,16 +76,16 @@ public class ContactHelper extends HelperBase {
         selectContactById(contact.getId());
         deleteSelectedContact();
         isAlertPresent();
-        //не понятно как обратиться к методу из NavigationHelper
-        //goToHomePage();
+        //не понятно как обратиться к методу homePage из NavigationHelper
+        //homePage();
         returnToHomePage();
     }
     public void goToContactCreationPage() {
         wd.findElement(By.linkText("add new")).click();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<ContactData>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
         for (WebElement element: elements
         ) {
