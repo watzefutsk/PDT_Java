@@ -8,6 +8,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTest extends TestBase {
 
@@ -19,37 +20,38 @@ public class ContactModificationTest extends TestBase {
         }
         app.goTo().homePage();
         if (app.contact().all().size() == 0) {
-            app.contact().create(new ContactData("Andy",
-                    "Smith",
-                    "Saint-Petersburg",
-                    "83522476125",
-                    "89536547898",
-                    "test@yandex.ru",
-                    "test1@gmail.com", null));
+            app.contact().create(new ContactData()
+                    .withFirstName("Dima")
+                    .withLastName("Smith")
+                    .withAddress("Saint-Petersburg")
+                    .withHomeNumber("83522476125")
+                    .withMobileNumber("89536547898")
+                    .withFirstEmail("test@yandex.ru")
+                    .withSecondEmail("test1@gmail.com"));
         }
     }
 
     @Test (enabled = true)
     public void testContactModification() {
-        List<ContactData> before = app.contact().all();
+        Set<ContactData> before = app.contact().all();
+        ContactData modifiedContact = before.iterator().next();
         int index = before.size() - 1;
-        ContactData contact = new ContactData(before.get(index).getId(), "Maria",
-                "Ivanova",
-                "Ekaterinburg",
-                "8352333444",
-                "89536111222",
-                "test123@yandex.ru",
-                "test123@gmail.com",
-                null);
-        app.contact().modify(index, contact);
-        List<ContactData> after = app.contact().all();
+        ContactData contact = new ContactData()
+                .withId(modifiedContact.getId())
+                .withFirstName("Maria")
+                .withLastName("Zhukova")
+                .withAddress("Saint-Petersburg")
+                .withHomeNumber("83522476333")
+                .withMobileNumber("89112875364")
+                .withFirstEmail("yandex@yandex.ru")
+                .withSecondEmail("gmail@gmail.com");
+        app.contact().modify(contact);
+        Set<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(index);
+        before.remove(modifiedContact);
         before.add(contact);
-        Comparator<? super ContactData> byId = (c1,c2) -> Integer.compare(c1.getId(), c2.getId());
-        before.sort(byId);
-        after.sort(byId);
+        contact.withId(after.stream().mapToInt((c) -> (c.getId())).max().getAsInt());
         Assert.assertEquals(after, before);
     }
 }

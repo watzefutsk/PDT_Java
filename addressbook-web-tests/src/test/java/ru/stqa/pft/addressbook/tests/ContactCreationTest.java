@@ -8,6 +8,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 
 public class ContactCreationTest extends TestBase {
@@ -23,24 +24,21 @@ public class ContactCreationTest extends TestBase {
   @Test (enabled = true)
   public void testContactCreation() throws Exception {
 
-    List<ContactData> before = app.contact().all();
-    ContactData contact = new ContactData(
-            "Dima",
-            "Smith",
-            "Saint-Petersburg",
-            "83522476125",
-            "89536547898",
-            "test@yandex.ru",
-            "test1@gmail.com",
-            null);
+    Set<ContactData> before = app.contact().all();
+    ContactData contact = new ContactData()
+            .withFirstName("Dima")
+            .withLastName("Smith")
+            .withAddress("Saint-Petersburg")
+            .withHomeNumber("83522476125")
+            .withMobileNumber("89536547898")
+            .withFirstEmail("test@yandex.ru")
+            .withSecondEmail("test1@gmail.com");
     app.contact().create(contact);
-    List<ContactData> after = app.contact().all();
+    Set<ContactData> after = app.contact().all();
     Assert.assertEquals(after.size(), before.size() + 1);
 
+    contact.withId(after.stream().mapToInt((c) -> (c.getId())).max().getAsInt());
     before.add(contact);
-    Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(after, before);
   }
 }
