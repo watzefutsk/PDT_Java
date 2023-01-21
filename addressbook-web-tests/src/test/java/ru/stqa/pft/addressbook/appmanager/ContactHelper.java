@@ -61,6 +61,7 @@ public class ContactHelper extends HelperBase {
         goToContactCreationPage();
         fillContactCreationPage(contact, true);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -69,6 +70,7 @@ public class ContactHelper extends HelperBase {
         initContactModificationById(contact.getId());
         fillContactCreationPage(contact, false);
         submitContactModification();
+        contactCache = null;
         returnToHomePage();
     }
 
@@ -78,14 +80,20 @@ public class ContactHelper extends HelperBase {
         isAlertPresent();
         //не понятно как обратиться к методу homePage из NavigationHelper
         //homePage();
+        contactCache = null;
         returnToHomePage();
     }
     public void goToContactCreationPage() {
         wd.findElement(By.linkText("add new")).click();
     }
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
         for (WebElement element: elements
         ) {
@@ -93,8 +101,8 @@ public class ContactHelper extends HelperBase {
             String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
-            contacts.add(contact);
+            contactCache.add(contact);
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 }
