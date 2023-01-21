@@ -49,9 +49,8 @@ public class ContactModificationTest extends TestBase {
                 .withFirstEmail("yandex@yandex.ru")
                 .withSecondEmail("gmail@gmail.com");
         app.contact().modify(contact);
+        assertThat(app.contact().count(), equalTo(before.size()));
         Contacts after = app.contact().all();
-        assertThat(after.size(), equalTo(before.size()));
-
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
     }
 }
