@@ -15,7 +15,9 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
     public void returnToHomePage() {
-      click(By.linkText("home page"));
+        //временное решение, пока не пойму как обращаться к NavigationHelper
+      //click(By.linkText("home page"));
+      click(By.linkText("home"));
     }
 
     public void submitContactCreation() {
@@ -32,7 +34,6 @@ public class ContactHelper extends HelperBase {
       type(By.name("email2"), contactData.getSecondEmail());
       
       if (creation) {
-          //new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
           new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
       } else {
           Assert.assertFalse(isElementPresent(By.name("new_group")));
@@ -41,7 +42,6 @@ public class ContactHelper extends HelperBase {
 
     public void initContactModification(int index) {
         wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
-        //click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void submitContactModification() {
@@ -63,6 +63,22 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
+    public void modifyContact(int index, ContactData contact) {
+        selectContact(index);
+        initContactModification(index);
+        fillContactCreationPage(contact, false);
+        submitContactModification();
+        returnToHomePage();
+    }
+
+    public void deleteContact(int index) {
+        selectContact(index);
+        deleteSelectedContact();
+        isAlertPresent();
+        //не понятно как обратиться к методу из NavigationHelper
+        //goToHomePage();
+        returnToHomePage();
+    }
     public void goToContactCreationPage() {
         wd.findElement(By.linkText("add new")).click();
     }

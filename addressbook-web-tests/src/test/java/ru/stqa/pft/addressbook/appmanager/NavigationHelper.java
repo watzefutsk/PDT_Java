@@ -3,9 +3,9 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class NavigatioHelper extends HelperBase {
+public class NavigationHelper extends HelperBase {
 
-    public NavigatioHelper(WebDriver wd) {
+    public NavigationHelper(WebDriver wd) {
         super(wd);
     }
     public void groupPage() {
