@@ -30,6 +30,7 @@ public class ContactHelper extends HelperBase {
       type(By.name("address"), contactData.getAddress());
       type(By.name("home"), contactData.getHomeNumber());
       type(By.name("mobile"), contactData.getMobileNumber());
+      type(By.name("work"), contactData.getWorkNumber());
       type(By.name("email"), contactData.getFirstEmail());
       type(By.name("email2"), contactData.getSecondEmail());
       
@@ -97,10 +98,14 @@ public class ContactHelper extends HelperBase {
         List<WebElement> elements = wd.findElements(By.cssSelector("[name='entry']"));
         for (WebElement element: elements
         ) {
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData().withId(id).withFirstName(firstName).withLastName(lastName);
+            String allPhones = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
+            String[] phones = allPhones.split("\n");
+            ContactData contact = new ContactData()
+                    .withId(id).withFirstName(firstName).withLastName(lastName)
+                    .withHomeNumber(phones[0]).withMobileNumber(phones[1]).withWorkNumber(phones[2]);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
