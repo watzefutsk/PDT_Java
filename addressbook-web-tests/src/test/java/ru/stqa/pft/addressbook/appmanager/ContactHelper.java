@@ -102,9 +102,14 @@ public class ContactHelper extends HelperBase {
             String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String allPhones = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
+            String allEmails = element.findElement(By.cssSelector("td:nth-child(5)")).getText();
+            String address = element.findElement(By.cssSelector("td:nth-child(4)")).getText();
             ContactData contact = new ContactData()
                     .withId(id).withFirstName(firstName).withLastName(lastName)
-                    .withAllPhones(allPhones);
+                    .withAllPhones(allPhones)
+                    .withAllEmails(allEmails)
+                    .withAddress(address);
+
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
@@ -121,8 +126,16 @@ public class ContactHelper extends HelperBase {
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
+        String firstEmail = wd.findElement(By.name("email")).getAttribute("value");
+        String secondEmail = wd.findElement(By.name("email2")).getAttribute("value");
+        String thirdEmail = wd.findElement(By.name("email3")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
         wd.navigate().back();
         return new ContactData()
-                .withId(contact.getId()).withFirstName(firstname).withLastName(lastname).withHomeNumber(home).withMobileNumber(mobile).withWorkNumber(work);
+                .withId(contact.getId()).withFirstName(firstname).withLastName(lastname)
+                .withHomeNumber(home).withMobileNumber(mobile).withWorkNumber(work)
+                .withFirstEmail(firstEmail).withSecondEmail(secondEmail).withThirdEmail(thirdEmail)
+                .withAddress(address);
+
     }
 }
