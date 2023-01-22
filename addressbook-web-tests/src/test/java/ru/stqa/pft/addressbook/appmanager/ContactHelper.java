@@ -102,10 +102,9 @@ public class ContactHelper extends HelperBase {
             String firstName = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String lastName = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String allPhones = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
-            String[] phones = allPhones.split("\n");
             ContactData contact = new ContactData()
                     .withId(id).withFirstName(firstName).withLastName(lastName)
-                    .withHomeNumber(phones[0]).withMobileNumber(phones[1]).withWorkNumber(phones[2]);
+                    .withAllPhones(allPhones);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
