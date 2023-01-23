@@ -2,14 +2,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 
-public class NavigatioHelper extends HelperBase {
+public class NavigationHelper extends HelperBase {
 
-    public NavigatioHelper(WebDriver wd) {
+    public NavigationHelper(WebDriver wd) {
         super(wd);
     }
-    public void goToGroupPage() {
+    public void groupPage() {
         if (isElementPresent(By.tagName("h1")) && wd.findElement(By.tagName("h1")).getText().equals("Groups") && isElementPresent(By.name("new"))) {
             return;
         }
@@ -17,7 +16,7 @@ public class NavigatioHelper extends HelperBase {
     }
 
 
-    public void goToHomePage() {
+    public void homePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }

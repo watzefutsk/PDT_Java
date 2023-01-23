@@ -13,7 +13,7 @@ public class ApplicationManager {
     WebDriver wd;
     private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
-    private NavigatioHelper navigatioHelper;
+    private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
     private String browser;
 
@@ -33,7 +33,7 @@ public class ApplicationManager {
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(wd);
-        navigatioHelper = new NavigatioHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
         sessionHelper = new SessionHelper(wd);
         sessionHelper.login("admin", "secret");
         contactHelper = new ContactHelper(wd);
@@ -44,15 +44,15 @@ public class ApplicationManager {
         wd.quit();
     }
 
-    public GroupHelper getGroupHelper() {
+    public GroupHelper group() {
         return groupHelper;
     }
 
-    public ContactHelper getContactHelper() {
+    public ContactHelper contact() {
         return contactHelper;
     }
 
-    public NavigatioHelper getNavigatioHelper() {
-        return navigatioHelper;
+    public NavigationHelper goTo() {
+        return navigationHelper;
     }
 }

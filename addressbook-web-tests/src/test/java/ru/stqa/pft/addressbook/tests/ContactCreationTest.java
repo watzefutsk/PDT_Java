@@ -1,26 +1,62 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.io.File;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class ContactCreationTest extends TestBase {
 
-  @Test
-  public void testContactCreation() throws Exception {
-    app.getNavigatioHelper().goToGroupPage();
-    if (!app.getGroupHelper().isThereAGroup()) {
-      app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().groupPage();
+    if (app.group().all().size() == 0) {
+      app.group().create(new GroupData().withName("test1"));
     }
-    app.getNavigatioHelper().goToHomePage();
-    app.getContactHelper().createContact(new ContactData("Andy",
-                                            "Smith",
-                                            "Saint-Petersburg",
-                                            "83522476125",
-                                            "89536547898",
-                                            "test@yandex.ru",
-                                            "test1@gmail.com",
-                                            null));
+    app.goTo().homePage();
+  }
+  @Test (enabled = true)
+  public void testContactCreation() throws Exception {
+
+    File photo = new File("./src/test/resources/photo.jpg");
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData()
+            .withFirstName("Dima")
+            .withLastName("Smith")
+            .withAddress("Saint-Petersburg")
+            .withHomeNumber("83522476125")
+            .withMobileNumber("89536547898")
+            .withFirstEmail("test@yandex.ru")
+            .withSecondEmail("test1@gmail.com")
+            .withPhoto(photo);
+    app.contact().create(contact);
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> (c.getId())).max().getAsInt()))));
+  }
+
+  @Test (enabled = false)
+  public void testBadContactCreation() throws Exception {
+
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData()
+            .withFirstName("Dima'")
+            .withLastName("Smith")
+            .withAddress("Saint-Petersburg")
+            .withHomeNumber("83522476125")
+            .withMobileNumber("89536547898")
+            .withFirstEmail("test@yandex.ru")
+            .withSecondEmail("test1@gmail.com");
+    app.contact().create(contact);
+    assertThat(app.contact().count(), equalTo(before.size()));
+    Contacts after = app.contact().all();
+    assertThat(after, equalTo(before));
   }
 }
