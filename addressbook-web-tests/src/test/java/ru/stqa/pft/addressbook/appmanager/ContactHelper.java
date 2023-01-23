@@ -33,6 +33,7 @@ public class ContactHelper extends HelperBase {
       type(By.name("work"), contactData.getWorkNumber());
       type(By.name("email"), contactData.getFirstEmail());
       type(By.name("email2"), contactData.getSecondEmail());
+      attach(By.name("photo"), contactData.getPhoto());
       
       if (creation) {
           new Select(wd.findElement(By.name("new_group"))).selectByIndex(1);
