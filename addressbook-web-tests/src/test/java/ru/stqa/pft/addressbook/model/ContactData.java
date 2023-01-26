@@ -148,6 +148,14 @@ public class ContactData {
         return photo;
     }
 
+    /*public File getPhoto() {
+        if (photo != null) {
+            return new File(photo);
+        } else {
+            return null;
+        }
+    }*/
+
 
     @Override
     public String toString() {
