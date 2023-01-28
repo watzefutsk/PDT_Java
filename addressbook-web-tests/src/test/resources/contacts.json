@@ -5,6 +5,7 @@
     "address": "Saint_Petersburg",
     "homenumber": "44-04-00",
     "mobilenumber": "8-900-655-12-20",
+    "worknumber": "0-900-655-12-2",
     "firstemail": "test0@test.com",
     "secondemail": "test@test0.com",
     "thirdemail": "test@test.com"
@@ -15,6 +16,7 @@
     "address": "Saint_Petersburg",
     "homenumber": "44-04-01",
     "mobilenumber": "8-900-655-12-21",
+    "worknumber": "1-900-655-12-2",
     "firstemail": "test1@test.com",
     "secondemail": "test@test1.com",
     "thirdemail": "test@test.com"
@@ -25,6 +27,7 @@
     "address": "Saint_Petersburg",
     "homenumber": "44-04-02",
     "mobilenumber": "8-900-655-12-22",
+    "worknumber": "2-900-655-12-2",
     "firstemail": "test2@test.com",
     "secondemail": "test@test2.com",
     "thirdemail": "test@test.com"
