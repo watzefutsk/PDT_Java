@@ -40,27 +40,28 @@ public class ContactCreationTest extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    if (app.group().all().size() == 0) {
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
       app.group().create(new GroupData().withName("test1"));
+      app.goTo().homePage();
     }
-    app.goTo().homePage();
   }
+
   @Test (dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
     //Как добавить фото в генератор?
     //File photo = new File("./src/test/resources/photo.jpg");
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> (c.getId())).max().getAsInt()))));
   }
 
   @Test (enabled = false)
   public void testBadContactCreation() throws Exception {
 
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData contact = new ContactData()
             .withFirstName("Dima'")
             .withLastName("Smith")
@@ -71,7 +72,7 @@ public class ContactCreationTest extends TestBase {
             .withSecondEmail("test1@gmail.com");
     app.contact().create(contact);
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before));
   }
 }
