@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,10 +50,12 @@ public class ContactCreationTest extends TestBase {
 
   @Test (dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
-    //Как добавить фото в генератор?
-    //File photo = new File("./src/test/resources/photo.jpg");
+
+    File photo = new File("./src/test/resources/photo.jpg");
+    Groups groups = app.db().groups();
+    ContactData contacts = contact.inGroup(groups.iterator().next());
     Contacts before = app.db().contacts();
-    app.contact().create(contact);
+    app.contact().create(contact.withPhoto(photo));
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> (c.getId())).max().getAsInt()))));
